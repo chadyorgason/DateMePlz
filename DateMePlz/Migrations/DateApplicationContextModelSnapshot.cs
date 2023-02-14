@@ -42,6 +42,28 @@ namespace DateMePlz.Migrations
                     b.HasKey("ApplicationID");
 
                     b.ToTable("responses");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationID = 1,
+                            Age = (byte)45,
+                            CreeperStalker = false,
+                            FirstName = "Michael",
+                            LastName = "Scott",
+                            Major = "Sales",
+                            Phone = "555-123-4567"
+                        },
+                        new
+                        {
+                            ApplicationID = 2,
+                            Age = (byte)90,
+                            CreeperStalker = true,
+                            FirstName = "Creed",
+                            LastName = "Bratton",
+                            Major = "Undeclared",
+                            Phone = "555-123-0987"
+                        });
                 });
 #pragma warning restore 612, 618
         }

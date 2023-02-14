@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DateMePlz.Migrations
 {
     [DbContext(typeof(DateApplicationContext))]
-    [Migration("20230214041856_Initial")]
+    [Migration("20230214054108_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,28 @@ namespace DateMePlz.Migrations
                     b.HasKey("ApplicationID");
 
                     b.ToTable("responses");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationID = 1,
+                            Age = (byte)45,
+                            CreeperStalker = false,
+                            FirstName = "Michael",
+                            LastName = "Scott",
+                            Major = "Sales",
+                            Phone = "555-123-4567"
+                        },
+                        new
+                        {
+                            ApplicationID = 2,
+                            Age = (byte)90,
+                            CreeperStalker = true,
+                            FirstName = "Creed",
+                            LastName = "Bratton",
+                            Major = "Undeclared",
+                            Phone = "555-123-0987"
+                        });
                 });
 #pragma warning restore 612, 618
         }

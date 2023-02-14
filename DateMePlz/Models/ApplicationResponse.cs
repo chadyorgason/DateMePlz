@@ -10,12 +10,15 @@ namespace DateMePlz.Models
     {
         [Key]
         [Required]
-        public int ApplicationID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public byte Age { get; set; }
-        public string Phone { get; set; }
-        public string Major { get; set; }
-        public bool CreeperStalker { get; set; }
+        public int MovieID { get; set; }
+        public string Category { get; set; }
+        public string Title { get; set; }
+        public int Year { get; set; }
+        public string Director { get; set; }
+        public string Rating { get; set; }
+        public bool Edited { get; set; }
+        public string Lent_To { get; set; }
+        public string Notes { get; set; }
+
     }
 }

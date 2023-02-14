@@ -12,13 +12,21 @@ namespace DateMePlz.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private DateApplicationContext blahContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        //constructor
+        public HomeController(ILogger<HomeController> logger, DateApplicationContext someName)
         {
             _logger = logger;
+            blahContext = someName;
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult MyPodcasts()
         {
             return View();
         }
@@ -32,6 +40,9 @@ namespace DateMePlz.Controllers
         [HttpPost]
         public IActionResult DatingApplication(ApplicationResponse ar)
         {
+            blahContext.Add(ar);
+            blahContext.SaveChanges();
+
             return View("Confirmation", ar);
         }
 
