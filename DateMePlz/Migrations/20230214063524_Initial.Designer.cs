@@ -2,14 +2,16 @@
 using DateMePlz.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DateMePlz.Migrations
 {
     [DbContext(typeof(DateApplicationContext))]
-    partial class DateApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230214063524_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
