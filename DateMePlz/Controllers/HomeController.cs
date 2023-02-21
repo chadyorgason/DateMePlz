@@ -1,5 +1,6 @@
 ﻿using DateMePlz.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,12 @@ namespace DateMePlz.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private DateApplicationContext blahContext { get; set; }
+        private DateApplicationContext daContext { get; set; }
 
         //constructor
-        public HomeController(ILogger<HomeController> logger, DateApplicationContext someName)
+        public HomeController(DateApplicationContext someName)
         {
-            _logger = logger;
-            blahContext = someName;
+            daContext = someName;
         }
 
         public IActionResult Index()
@@ -31,30 +30,84 @@ namespace DateMePlz.Controllers
             return View();
         }
 
+        //Get for adding a movie
         [HttpGet]
         public IActionResult DatingApplication()
         {
-            return View();
+            ViewBag.Categories = daContext.Categories.ToList();
+
+            return View("DatingApplication", new ApplicationResponse());
         }
 
+        // Post for adding a movie
         [HttpPost]
         public IActionResult DatingApplication(ApplicationResponse ar)
         {
-            blahContext.Add(ar);
-            blahContext.SaveChanges();
+            // if it has required fields
+            if (ModelState.IsValid)
+            {
+                daContext.Add(ar);
+                daContext.SaveChanges();
 
-            return View("Confirmation", ar);
+                return View("Confirmation", ar);
+            }
+            else
+            {
+                ViewBag.Categories = daContext.Categories.ToList();
+
+                return View(ar);
+            }
         }
 
-        public IActionResult Privacy()
+        // show list of movies
+        public IActionResult Waitlist()
         {
-            return View();
+            var applications = daContext.responses
+                .Include(x => x.Category)
+                //.Where(whatever => whatever.Rating == "PG-13")
+                .OrderBy(x => x.Year)
+                .ToList();
+
+            return View(applications);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // Edit form 
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewBag.Categories = daContext.Categories.ToList();
+
+            var application = daContext.responses.Single(x => x.MovieID == id);
+
+            return View("DatingApplication", application);
+        }
+
+        // Post edit form
+        [HttpPost]
+        public IActionResult Edit(ApplicationResponse meh)
+        {
+            daContext.Update(meh);
+            daContext.SaveChanges();
+            return RedirectToAction("Waitlist");
+        }
+
+        // delete form
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var application = daContext.responses.Single(x => x.MovieID == id);
+
+            return View(application);
+        }
+
+        // Post delete
+        [HttpPost]
+        public IActionResult Delete(ApplicationResponse ar)
+        {
+            daContext.responses.Remove(ar);
+            daContext.SaveChanges();
+
+            return RedirectToAction("Waitlist");
         }
     }
 }

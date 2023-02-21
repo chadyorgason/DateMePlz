@@ -15,15 +15,27 @@ namespace DateMePlz.Models
         }
 
         public DbSet<ApplicationResponse> responses { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
+        // Seed data
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Category>().HasData(
+                    new Category { CategoryId = 1, CategoryName = "Action/Adventure" },
+                    new Category { CategoryId = 2, CategoryName = "Comedy"},
+                    new Category { CategoryId = 3, CategoryName = "Drama" },
+                    new Category { CategoryId = 4, CategoryName = "Family" },
+                    new Category { CategoryId = 5, CategoryName = "Horror/Suspense" },
+                    new Category { CategoryId = 6, CategoryName = "Miscellaneous" },
+                    new Category { CategoryId = 7, CategoryName = "Television" },
+                    new Category { CategoryId = 8, CategoryName = "VHS" }
+                );
             mb.Entity<ApplicationResponse>().HasData(
 
                 new ApplicationResponse
                 {
                     MovieID = 1,
-                    Category = "Action/Adventure",
+                    CategoryId = 1,
                     Title = "Avengers, The",
                     Year = 2012,
                     Director = "Joss Whedon",
@@ -35,7 +47,7 @@ namespace DateMePlz.Models
                 new ApplicationResponse
                 {
                     MovieID = 2,
-                    Category = "Action/Adventure",
+                    CategoryId = 1,
                     Title = "Dark Knight, The",
                     Year = 2008,
                     Director = "Christopher Nolan",
@@ -47,7 +59,7 @@ namespace DateMePlz.Models
                 new ApplicationResponse
                 {
                     MovieID = 3,
-                    Category = "Action/Adventure",
+                    CategoryId = 1,
                     Title = "Ocean's Eleven",
                     Year = 2001,
                     Director = "Steven Soderbergh",

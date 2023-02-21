@@ -11,9 +11,7 @@ namespace DateMePlz.Models
         [Key]
         [Required]
         public int MovieID { get; set; }
-        [Required]
-        public string Category { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You literally need a title.")]
         public string Title { get; set; }
         [Required]
         public int Year { get; set; }
@@ -25,5 +23,9 @@ namespace DateMePlz.Models
         public string Lent_To { get; set; }
         public string Notes { get; set; }
 
+        // Build foreign key relationship
+        [Required]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
